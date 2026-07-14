@@ -362,7 +362,7 @@ function GeneratorPage() {
         systemInstruction: { parts: [{ text: systemPrompt }] }
       };
       
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       
       const data = await fetchWithRetry(url, {
         method: 'POST',
