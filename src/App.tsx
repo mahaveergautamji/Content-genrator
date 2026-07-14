@@ -18,7 +18,7 @@ import {
   Layers
 } from 'lucide-react';
 
-const apiKey = ""; // Environment API key injection fallback
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 const CONTENT_TYPES = [
   "Blog Post", 
@@ -361,8 +361,8 @@ function GeneratorPage() {
         contents: [{ parts: [{ text: userQuery }] }],
         systemInstruction: { parts: [{ text: systemPrompt }] }
       };
-
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+      
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
       
       const data = await fetchWithRetry(url, {
         method: 'POST',
