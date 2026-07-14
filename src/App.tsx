@@ -358,19 +358,30 @@ function GeneratorPage() {
       const userQuery = `Write content about the following topic or prompt: ${prompt}`;
 
       const payload = {
-        contents: [{ parts: [{ text: userQuery }] }],
-        systemInstruction: { parts: [{ text: systemPrompt }] }
+        contents: [
+          {
+            parts: [
+              {
+                text: `${systemPrompt}\n\n${userQuery}`
+              }
+            ]
+          }
+        ]
       };
-      
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-      
-      const data = await fetchWithRetry(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
 
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      const data = await fetchWithRetry(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-goog-api-key": apiKey,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
       
       if (text) {
         setGeneratedContent(text);
